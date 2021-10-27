@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+	<TITLE>Eliza (elizabot.js)</TITLE>
+	<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="elizabot.js"></SCRIPT>
+	<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="elizadata.js"></SCRIPT>
+  <link rel="stylesheet" href="style.css">
+
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+
+var eliza = new ElizaBot();
+var elizaLines = new Array();
+
+var displayCols = 60;
+var displayRows = 20;
+
+function elizaReset() {
+	eliza.reset();
+	elizaLines.length = 0;
+	elizaStep();
+}
+
+function elizaStep() {
+	var f = document.forms.e_form;
+	var userinput = f.e_input.value;
+	if (eliza.quit) {
+		f.e_input.value = '';
+		if (confirm("This session is over.\nStart over?")) elizaReset();
+		f.e_input.focus();
+		return;
+	}
+	else if (userinput != '') {
+		var usr = 'YOU:   ' + userinput;
+		var rpl ='KYLE: ' + eliza.transform(userinput);
+		elizaLines.push(usr);
+		elizaLines.push(rpl);
+		// display nicely
+		// (fit to textarea with last line free - reserved for extra line caused by word wrap)
+		var temp  = new Array();
+		var l = 0;
+		for (var i=elizaLines.length-1; i>=0; i--) {
+			l += 1 + Math.floor(elizaLines[i].length/displayCols);
+			if (l >= displayRows) break
+			else temp.push(elizaLines[i]);
+		}
+		elizaLines = temp.reverse();
+		f.e_display.value = elizaLines.join('\n');
+	}
+	else if (elizaLines.length == 0) {
+		// no input and no saved lines -> output initial
+		var initial = 'KYLE: ' + eliza.getInitial();
+		elizaLines.push(initial);
+		f.e_display.value = initial + '\n';
+	}
+	f.e_input.value = '';
+	f.e_input.focus();
+}
+
+//-->
+</SCRIPT>
+</HEAD>
+
+<BODY TOPMARGIN="0" LEFTMARGIN="0" RIGHTMARGIN="0" BOTTOMMARGIN="0" MARGINHEIGHT="0" MARGINWIDTH="0" STYLE="border:0" onload="window.setTimeout('elizaReset()',100)"><A NAME="top"></A>
+
+
+<CENTER>
+<P>&nbsp;</P>
+<H3>"Kyle Gass"</H3>
+<TABLE BORDER="0" CELLSPACING="10" CELLPADDING="0">
+<FORM NAME="e_form" onsubmit="elizaStep();return false">
+<TR><TD COLSPAN="2"><TEXTAREA NAME="e_display" COLS="60" ROWS="20"></TEXTAREA></TD></TR>
+<TR VALIGN="middle">
+	<TD><INPUT TYPE="text" NAME="e_input" SIZE="50"></TD>
+	<TD ALIGN="right"><INPUT TYPE="submit" VALUE="&nbsp;Talk&nbsp;"> <INPUT TYPE="reset" VALUE="Reset" onClick="window.setTimeout('elizaReset()',100)"></TD>
+</TR>
+</FORM>
+</TABLE>
+</CENTER>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<TABLE BORDER="0" CELLSPACING="12" CELLPADDDING="0">
+<TR><TD COLSPAN="2">
+"Kyle Gass" is a codename that is used by our friend in the chat. "Kyle" doesn't believe in names for some reason, something to do with aliens I guess. He is a natural talker however, for one he is very spiritual and often references how he attains his spiritual side through a mix of "medicines". Kyle also claims "They are all natural so the fact that the FBI has raided my house three times is stupid".
+
+
+<BR><BR>
+"Kyle Gass" loves talking but sometimes he talks to much. Most of the time he actually is only thinking about the things he wants to think about so if you are reading this and want someone to actually listen to you. Kyle Gass is not the person but, if you love conspiracy theories then he is. 
+
+</BODY>
+</HTML>

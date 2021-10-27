@@ -1,0 +1,22 @@
+body{
+    background-image: url('https://i.pinimg.com/originals/84/ca/b1/84cab149989fa1ede17e5c756dd03146.gif');
+    background-size: cover;
+    
+    
+    
+    height: 100vh;
+    padding:0;
+    margin:0;
+}
+
+h3{
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+
+}
+
+tr{
+    color: white;
+    text-align: center;
+}
